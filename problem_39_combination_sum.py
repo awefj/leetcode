@@ -20,6 +20,20 @@ class Solution:
             dfs(i)
         return res
 
+    def combinationSum01(self, candidates: List[int], target: int) -> List[List[int]]:
+        def dfs(sum, idx, path):
+            if sum < 0:
+                return
+            if sum == 0:
+                res.append(path)
+                return
+            for i in range(idx, len(candidates)):
+                dfs(sum - candidates[i], i, path + [candidates[i]])
+
+        res = []
+        dfs(target, 0, [])
+        return res
+
 
 s = Solution()
 print(s.combinationSum([2, 3, 6, 7], 7))

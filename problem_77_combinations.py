@@ -24,6 +24,20 @@ class Solution:
             dfs(i)
         return res
 
+    def combine02(self, n: int, k: int) -> List[List[int]]:
+        def dfs(elem, start: int, k: int):
+            if k == 0:
+                res.append(elem[:])
+                return
+            for i in range(start, n + 1):
+                elem.append(i)
+                dfs(elem, i + 1, k - 1)
+                elem.pop()
+
+        res = []
+        dfs([], 1, k)
+        return res
+
 
 s = Solution()
 print(s.combine(6, 4))
