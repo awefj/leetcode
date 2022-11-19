@@ -47,13 +47,22 @@ def tree_node_print(root: TreeNode) -> list:
     res = []
     queue = collections.deque()
     queue.append(root)
+
     while queue:
         node = queue.popleft()
         if node:
             res.append(node.val)
-            if node.left or node.right:
-                queue.append(node.left)
-                queue.append(node.right)
+            queue.append(node.left)
+            queue.append(node.right)
         else:
             res.append("None")
-    return res
+
+    # remove useless "None"s
+    res = res[::-1]
+    while len(res) > 0:
+        if res[0] == "None":
+            del res[0]
+        else:
+            break
+
+    return res[::-1]

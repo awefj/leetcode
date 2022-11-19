@@ -18,12 +18,17 @@ class Solution:
         if root is None:
             return True
         get_height(0, root)
+        """
         self.heights.sort()
         if self.heights[-1] - self.heights[0] > 1:
             return False
+        """
+        if max(self.heights) - min(self.heights) > 1:
+            return False
         return True
 
-root = LeetCode.tree_node_create([1])
+
+root = LeetCode.tree_node_create([1, 2, 3, "None", "None", 4, 5, 6, 7, "None", "None", 8, 9])
 print(LeetCode.tree_node_print(root))
-s=Solution()
+s = Solution()
 print(s.isBalanced(root))
