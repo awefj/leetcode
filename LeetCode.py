@@ -24,29 +24,24 @@ def tree_node_create(value_list: list) -> Optional[TreeNode]:
     index = 0
     root = TreeNode(value_list[index])
     queue.append(root)
+    index += 1
     while queue:
         node = queue.popleft()
-        if index + 1 < len(value_list):
-            index += 1
-            node_left = None
-            if value_list[index] != "None":
-                node_left = TreeNode(value_list[index])
-                queue.append(node_left)
-            node.left = node_left
-        if index + 1 < len(value_list):
-            index += 1
-            node_right = None
-            if value_list[index] != "None":
-                node_right = TreeNode(value_list[index])
-                queue.append(node_right)
-            node.right = node_right
+        if index < len(value_list) and value_list[index]:
+            node.left = TreeNode(int(value_list[index]))
+            queue.append(node.left)
+        index += 1
+        if index < len(value_list) and value_list[index]:
+            node.right = TreeNode(int(value_list[index]))
+            queue.append(node.right)
+        index += 1
+
     return root
 
 
 def tree_node_print(root: TreeNode) -> list:
     res = []
-    queue = collections.deque()
-    queue.append(root)
+    queue = collections.deque([root])
 
     while queue:
         node = queue.popleft()
@@ -55,14 +50,13 @@ def tree_node_print(root: TreeNode) -> list:
             queue.append(node.left)
             queue.append(node.right)
         else:
-            res.append("None")
+            res.append(None)
 
     # remove useless "None"s
     res = res[::-1]
     while len(res) > 0:
-        if res[0] == "None":
-            del res[0]
-        else:
+        if res[0]:
             break
-
+        else:
+            del res[0]
     return res[::-1]
