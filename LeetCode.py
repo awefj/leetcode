@@ -17,21 +17,26 @@ class TreeNode:
         self.right = right
 
 
-def tree_node_create(value_list: list) -> Optional[TreeNode]:
-    if len(value_list) < 1:
+null = None
+
+
+def tree_node_create(string: Optional[str]) -> Optional[TreeNode]:
+    if len(string) < 1:
         return None
-    queue = collections.deque()
+    str_val = string.replace(" ", "")
+    value_list = str_val.split(sep=',')
     index = 0
-    root = TreeNode(value_list[index])
-    queue.append(root)
+    root = TreeNode(int(value_list[index]))
+    queue = collections.deque([root])
     index += 1
     while queue:
         node = queue.popleft()
-        if index < len(value_list) and value_list[index]:
+        if index < len(value_list) and value_list[index] != 'null':
             node.left = TreeNode(int(value_list[index]))
             queue.append(node.left)
         index += 1
-        if index < len(value_list) and value_list[index]:
+        if index < len(value_list) and value_list[index] != 'null':
+            #print(f"{index}, {len(value_list)}, {index < len(value_list)}")
             node.right = TreeNode(int(value_list[index]))
             queue.append(node.right)
         index += 1
@@ -39,7 +44,7 @@ def tree_node_create(value_list: list) -> Optional[TreeNode]:
     return root
 
 
-def tree_node_print(root: TreeNode) -> list:
+def tree_node_print(root: Optional[TreeNode]) -> Optional[str]:
     res = []
     queue = collections.deque([root])
 
@@ -59,4 +64,5 @@ def tree_node_print(root: TreeNode) -> list:
             break
         else:
             del res[0]
-    return res[::-1]
+    # return res[::-1]
+    return ', '.join(map(str, res[::-1]))

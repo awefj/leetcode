@@ -5,12 +5,12 @@ from LeetCode import TreeNode
 
 
 class Solution:
-    heights = []
-
     def isBalanced(self, root: Optional[TreeNode]) -> bool:
+        heights = []
+
         def get_height(cur: int, node: TreeNode):
             if node is None:
-                self.heights.append(cur)
+                heights.append(cur)
                 return
             get_height(cur + 1, node.left)
             get_height(cur + 1, node.right)
@@ -18,17 +18,26 @@ class Solution:
         if root is None:
             return True
         get_height(0, root)
-        """
-        self.heights.sort()
-        if self.heights[-1] - self.heights[0] > 1:
-            return False
-        """
-        if max(self.heights) - min(self.heights) > 1:
+        max_val, min_val = max(heights), min(heights)
+        if max_val - min_val > 1:
             return False
         return True
 
+    def isBalanced01(self, root: Optional[TreeNode]) -> bool:
+        def check(root: Optional[TreeNode]):
+            if not root:
+                return 0
+            left = check(root.left)
+            right = check(root.right)
+            if left == -1 or right == -1 or abs(left - right) > 1:
+                return -1
+            return max(left, right) + 1
 
-root = LeetCode.tree_node_create([1, 2, 3, "None", "None", 4, 5, 6, 7, "None", "None", 8, 9])
-print(LeetCode.tree_node_print(root))
+        return check(root) != -1
+
+
+root1 = LeetCode.tree_node_create('1,2,3,4,5,6,null,8')
+
 s = Solution()
-print(s.isBalanced(root))
+print(s.isBalanced(root1))
+print(s.isBalanced01(root1))

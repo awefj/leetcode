@@ -12,15 +12,14 @@ class Codec:
         :type root: TreeNode
         :rtype: str
         """
-        return ','.join(map(str, LeetCode.tree_node_print(root)))
+        return LeetCode.tree_node_print(root)
 
     def my_deserialize(self, data):
         """Decodes your encoded data to tree.
         :type data: str
         :rtype: TreeNode
         """
-        list_data = data.split(sep=", ")
-        return LeetCode.tree_node_create(list_data)
+        return LeetCode.tree_node_create(data)
 
     def serialize(self, root: Optional[TreeNode]) -> Optional[str]:
         """Encodes a tree to a single string.
@@ -114,8 +113,10 @@ class Codec01:
 # deser = Codec()
 # ans = deser.deserialize(ser.serialize(root))
 null = None
-root1 = LeetCode.tree_node_create([])
-root2 = LeetCode.tree_node_create([5, 4, 7, 3, null, 2, null, -1, null, 9])
+str1 = ''
+str2 = '5, 4, 7, 3, null, 2, null, -1, null, 9'
+root1 = LeetCode.tree_node_create(str1)
+root2 = LeetCode.tree_node_create(str2)
 ser = Codec01()
 deser = Codec01()
 codec01_line1 = ser.serialize(root1)
